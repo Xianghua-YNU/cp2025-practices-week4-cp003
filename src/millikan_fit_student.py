@@ -4,6 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import pytest
 
 def load_data(filename):
     """
@@ -16,11 +17,10 @@ def load_data(filename):
         x: 频率数据数组
         y: 电压数据数组
     """
-    # 在此处编写代码，读取数据文件
     try:
         data = np.loadtxt(filename)
-        x = data[:,0]
-        y = data[:,1]
+        x = data[:, 0]
+        y = data[:, 1]
         return x, y
     except ValueError as e:
         print(f"Error loading data: {e}")
@@ -49,11 +49,11 @@ def calculate_parameters(x, y):
     Ex = np.mean(x)
     Ey = np.mean(y)
     Exx = np.mean(x**2)
-    Exy = np.mean(x*y)
+    Exy = np.mean(x * y)
     if Exx - Ex**2 == 0:
         raise ValueError("Variance of x is zero, cannot calculate slope")
-    m = (Exy - Ex*Ey) / (Exx - Ex**2)
-    c = (Exx*Ey - Ex*Exy) / (Exx - Ex**2)
+    m = (Exy - Ex * Ey) / (Exx - Ex**2)
+    c = (Exx * Ey - Ex * Exy) / (Exx - Ex**2)
     return m, c, Ex, Ey, Exx, Exy
 
 def plot_data_and_fit(x, y, m, c):
@@ -69,14 +69,13 @@ def plot_data_and_fit(x, y, m, c):
     返回:
         fig: matplotlib图像对象
     """
-    # 在此处编写代码，绘制数据点和拟合直线
     if len(x) != len(y):
         raise ValueError("x and y arrays must have the same length")
     if len(x) == 0:
         raise ValueError("x and y arrays cannot be empty")
     fig, ax = plt.subplots()
     ax.scatter(x, y, label="Data")
-    ax.plot(x, m*x + c, color='red', label="Fit")
+    ax.plot(x, m * x + c, color='red', label="Fit")
     ax.set_xlabel("Frequency (Hz)")
     ax.set_ylabel("Voltage (V)")
     ax.legend()
@@ -100,7 +99,6 @@ def calculate_planck_constant(m):
     h_actual = 6.626e-34  # J·s
     relative_error = abs(h - h_actual) / h_actual * 100
     return h, relative_error
-    
 
 def main():
     """主函数"""
@@ -110,7 +108,7 @@ def main():
     # 加载数据
     x, y = load_data(filename)
     if x is None or y is None:
-        return  
+        return
     
     # 计算拟合参数
     m, c, Ex, Ey, Exx, Exy = calculate_parameters(x, y)
@@ -137,3 +135,18 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# 测试用例
+def test_calculate_planck_constant_invalid_slope():
+    """测试无效斜率时的异常处理"""
+    with pytest.raises(ValueError):
+        calculate_planck_constant(0)  # 斜率为0
+
+def test_plot_data_and_fit_invalid_input():
+    """测试无效输入时的异常处理"""
+    x = np.array([1, 2, 3])
+    y = np.array([1, 2])
+    with pytest.raises(ValueError):
+        plot_data_and_fit(x, y, 1, 0)  # 长度不匹配
+    with pytest.raises(ValueError):
+        plot_data_and_fit(np.array([]), np.array([]), 1, 0)  # 空数组
