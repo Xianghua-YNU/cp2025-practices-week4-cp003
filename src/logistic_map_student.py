@@ -96,7 +96,7 @@ def main():
 
     #分岔图分析
     fig = plot_bifurcation(2.5,4.0,1000,1000,100)
-    fig.savfig("bifurcation.png",dpi=300)
+    fig.savefig("bifurcation.png",dpi=300)
     plt.close(fig)
        
 if __name__ == "__main__":
