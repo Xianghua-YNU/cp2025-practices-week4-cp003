@@ -17,7 +17,7 @@ def iterate_logistic(r, x0, n):
     返回:
         x: 迭代序列数组
     """
-   x = np.zeros(n)
+    x = np.zeros(n)
     x[0] = x0
     for i in range(1, n):
         x[i] = r * x[i-1] * (1 - x[i-1])
