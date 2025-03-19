@@ -42,11 +42,16 @@ def calculate_parameters(x, y):
         Exx: x^2的平均值
         Exy: xy的平均值
     """
-    # 在此处编写代码，计算Ex, Ey, Exx, Exy, m和c
+    if len(x) == 0 or len(y) == 0:
+        raise ValueError("Input arrays cannot be empty")
+    if len(x) != len(y):
+        raise ValueError("Input arrays must have the same length")
     Ex = np.mean(x)
     Ey = np.mean(y)
     Exx = np.mean(x**2)
     Exy = np.mean(x*y)
+    if Exx - Ex**2 == 0:
+        raise ValueError("Variance of x is zero, cannot calculate slope")
     m = (Exy - Ex*Ey) / (Exx - Ex**2)
     c = (Exx*Ey - Ex*Exy) / (Exx - Ex**2)
     return m, c, Ex, Ey, Exx, Exy
@@ -65,6 +70,10 @@ def plot_data_and_fit(x, y, m, c):
         fig: matplotlib图像对象
     """
     # 在此处编写代码，绘制数据点和拟合直线
+    if len(x) != len(y):
+        raise ValueError("x and y arrays must have the same length")
+    if len(x) == 0:
+        raise ValueError("x and y arrays cannot be empty")
     fig, ax = plt.subplots()
     ax.scatter(x, y, label="Data")
     ax.plot(x, m*x + c, color='red', label="Fit")
@@ -84,13 +93,11 @@ def calculate_planck_constant(m):
         h: 计算得到的普朗克常量值
         relative_error: 与实际值的相对误差(%)
     """
-    # 电子电荷
-    e = 1.602e-19  # 光速
-    # 在此处编写代码，计算普朗克常量和相对误差
+    if m == 0:
+        raise ValueError("Slope cannot be zero")
+    e = 1.602e-19  # 电子电荷
     h = e * m
-    # 提示: 实际的普朗克常量值为 6.626e-34 J·s
-    h_actual = 6.626e-34  #j·s
-    # 计算相对误差
+    h_actual = 6.626e-34  # J·s
     relative_error = abs(h - h_actual) / h_actual * 100
     return h, relative_error
     
