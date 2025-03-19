@@ -69,6 +69,8 @@ def plot_data_and_fit(x, y, m, c):
     # 在此处编写代码，绘制数据点和拟合直线
     if len(x) != len(y):
         raise ValueError("x and y arrays must have the same length")
+    if len(x) == 0:
+        raise ValueError("x and y arrays cannot be empty")
     fig, ax = plt.subplots()
     ax.scatter(x, y, label="Data")
     ax.plot(x, m*x + c, color='red', label="Fit")
