@@ -90,7 +90,11 @@ def main():
         fig = plot_time_series(r, x0, n)
         fig.savefig(f"logistic_r{r}.png", dpi=300)
         plt.close(fig)
-    
+
+    #分岔图分析
+    fig = plot_bifurcation(2.5,4.0,1000,1000,100)
+    fig.savfig("bifurcation.png",dpi=300)
+    plt.close(fig)
        
 if __name__ == "__main__":
     main()
