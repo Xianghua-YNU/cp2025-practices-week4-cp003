@@ -90,12 +90,12 @@ def plot_data_and_fit(x, y, m, c):
 
     # 设置标题和标签
     ax.set_xlabel('frequency(Hz)')
-    ax.set_ylabel('voltage(V)')
-    ax.set_title('Fitting of experimental data for photoelectric effect')
-    ax.legend()
-    ax.grid(True, linestyle='--', alpha=0.6)
+    ax.set_ylabel('voltage(V)')
+    ax.set_title('Fitting of experimental data for photoelectric effect')
+    ax.legend()
+    ax.grid(True, linestyle='--', alpha=0.6)
 
-    return fig
+    return fig
 
 def calculate_planck_constant(m):
     """
