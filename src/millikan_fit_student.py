@@ -145,8 +145,8 @@ def test_calculate_planck_constant_invalid_slope():
 def test_plot_data_and_fit_invalid_input():
     """测试无效输入时的异常处理"""
     x = np.array([1, 2, 3])
-    y = np.array([1, 2])
+    y = np.array([1, 2])  # 长度不匹配
     with pytest.raises(ValueError):
-        plot_data_and_fit(x, y, 1, 0)  # 长度不匹配
+        plot_data_and_fit(x, y, 1, 0)
     with pytest.raises(ValueError):
         plot_data_and_fit(np.array([]), np.array([]), 1, 0)  # 空数组
