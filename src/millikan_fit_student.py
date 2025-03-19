@@ -89,8 +89,8 @@ def plot_data_and_fit(x, y, m, c):
     ax.plot(x_fit, y_fit, color='red', linestyle='--', label='fitting curve', zorder=2)
 
     # 设置标题和标签
-    ax.set_xlabel('frequency (Hz)')
-    ax.set_ylabel('voltage (V)')
+    ax.set_xlabel('frequency(Hz)')
+    ax.set_ylabel('voltage(V)')
     ax.set_title('Fitting of experimental data for photoelectric effect')
     ax.legend()
     ax.grid(True, linestyle='--', alpha=0.6)
