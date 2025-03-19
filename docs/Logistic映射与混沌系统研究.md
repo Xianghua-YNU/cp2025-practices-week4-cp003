@@ -41,7 +41,32 @@ $$
      ◦ 当 $r=3.45$时， $x$趋于四个值，结论为**周期4分岔**。
    
      ◦ 当 $r=3.6$时， $x$的取值没有明确趋向，结论为**混沌**。
+import numpy as np
+import matplotlib.pyplot as plt
 
+def logistic_map(r, x0, n_iter):
+    x = np.zeros(n_iter)
+    x[0] = x0
+    for i in range(1, n_iter):
+        x[i] = r * x[i-1] * (1 - x[i-1])
+    return x
+
+# 参数设置
+r_values = [2, 3.2, 3.45, 3.6]
+x0 = 0.5
+n_iter = 60
+
+# 绘制子图
+plt.figure(figsize=(12, 8))
+for i, r in enumerate(r_values):
+    x = logistic_map(r, x0, n_iter)
+    plt.subplot(2, 2, i+1)
+    plt.plot(range(n_iter), x, 'b-')
+    plt.title(f'r = {r}')
+    plt.xlabel('Iteration')
+    plt.ylabel('x')
+plt.tight_layout()
+plt.show()
 ---
 
 ### 任务2：费根鲍姆图的绘制
@@ -63,7 +88,33 @@ $$
    
    • 确定系统从有序（固定值或有限循环）到混沌的转变点，称为**混沌边界**。
 
----
+def feigenbaum_plot(r_min, r_max, r_step, x0, n_iter, n_record):
+    r_values = np.arange(r_min, r_max, r_step)
+    x_values = []
+    for r in r_values:
+        x = logistic_map(r, x0, n_iter)
+        x_values.append(x[n_iter - n_record:])
+    return r_values, x_values
+
+# 参数设置
+r_min = 2.6
+r_max = 4.0
+r_step = 0.001
+x0 = 0.5
+n_iter = 250
+n_record = 150
+
+# 生成费根鲍姆图数据
+r_values, x_values = feigenbaum_plot(r_min, r_max, r_step, x0, n_iter, n_record)
+
+# 绘制费根鲍姆图
+plt.figure(figsize=(10, 6))
+for r, x in zip(r_values, x_values):
+    plt.plot([r] * len(x), x, 'b,', markersize=1)
+plt.title('Feigenbaum Plot')
+plt.xlabel('r')
+plt.ylabel('x')
+plt.show()
 
 ## 实验建议
 1. **代码优化**：
