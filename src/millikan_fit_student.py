@@ -95,7 +95,7 @@ def calculate_planck_constant(m):
 def main():
     """主函数"""
     # 数据文件路径
-    filename = "millikan.txt"
+    filename = "/workspaces/cp2025-practices-week4-cp003/data/millikan.txt"
     
     # 加载数据
     x, y = load_data(filename)
